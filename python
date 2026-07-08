@@ -1,0 +1,24 @@
+local RIVALS_PLACE_ID = 17625359962
+
+if game.PlaceId == RIVALS_PLACE_ID then
+    print("[Loader] Valid game detected. Fetching script...")
+    
+    local success, scriptContent = pcall(function()
+        return game:HttpGet("https://raw.githubusercontent.com/finwo67/python.hackrage/refs/heads/main/python.cc")
+    end)
+    
+    if success and scriptContent then
+        print("[Loader] Script fetched successfully. Executing...")
+        local executeScript, compileError = loadstring(scriptContent)
+        
+        if executeScript then
+            executeScript()
+        else
+            warn("[Loader] Compilation Error: " .. tostring(compileError))
+        end
+    else
+        warn("[Loader] Network Error: Failed to download the script content.")
+    end
+else
+    warn("[Loader] Execution cancelled: This script is only configured to run inside Rivals.")
+end
